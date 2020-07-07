@@ -6,17 +6,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require("../../models/User");
-
+// 400 = bad request
 router.post(
   "/",
   [
-    check("name", "name is reqired")
-      .not()
-      .isEmpty(),
-    check("email", "email is required").isEmail(),
+    check("name", "name is reqired").not().isEmpty(),
+    check("email", "email address is not valid").isEmail(),
     check("password", "password should be of minimum 8 characters").isLength({
-      min: 8
-    })
+      min: 8,
+    }),
   ],
   async (req, res) => {
     //console.log(req.body);
@@ -24,7 +22,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
+    //registering the user
     const { name, email, password } = req.body;
 
     try {
@@ -34,13 +32,13 @@ router.post(
           .status(400)
           .json({ errors: [{ msg: "user already exist" }] });
       }
-      const avatar = gravatar.url(email, { s: 200, r: "pg", d: "mm" });
+      const avatar = gravatar.url(email, { s: "200", r: "pg", d: "mm" });
 
       user = new User({
         name,
         email,
         avatar,
-        password
+        password,
       });
 
       const salt = await bcrypt.genSalt(12);
@@ -49,8 +47,8 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       };
 
       jwt.sign(
