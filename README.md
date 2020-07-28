@@ -1,4 +1,4 @@
-# devConnector
+# devHub
 A social network for developers
 
                                                                            DEVELOPERS HUB
