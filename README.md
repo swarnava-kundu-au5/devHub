@@ -53,3 +53,5 @@ After logging in the dashboard for every user there are fields like education an
 Posts can be liked by the same user only once or unliked.
 
 React hooks are used to maintain state in functional components.Store is created using redux and react-redux for global state management of the application to pass the data to child components from the global state.The are total six reducers inside client/src/reducers they are alert, auth, profile post.The above mentioned reducers are combined using the combineReducers method inside the index.js in the destination mentioned above.The jwt id is stored in local storage.
+
+This web app is deployed in heroku. https://shrouded-eyrie-46750.herokuapp.com/profiles
